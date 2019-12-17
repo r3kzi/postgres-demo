@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-postgres-demo-service
+  labels:
+    app: springboot-postgres-demo-service
+spec:
+  selector:
+    app: springboot-postgres-demo
+  type: ClusterIP
+  ports:
+    - name: fake-port
+      port: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: springboot-postgres-demo
+  labels:
+    app: springboot-postgres-demo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: springboot-postgres-demo
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: springboot-postgres-demo
+          image: rekzi/springboot-postgres-demo:latest
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://dwpbank-postgresql:5432/"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres.dwpbank-postgresql.credentials
+                  key: password

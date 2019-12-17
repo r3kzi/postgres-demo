@@ -1,0 +1,25 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: dwpbank-postgresql
+spec:
+  teamId: "DWPBANK"
+  volume:
+    size: 1Gi
+  numberOfInstances: 3
+  users:
+    admin: # database owner
+      - superuser
+      - createdb
+    foo: []  # role for application foo
+  databases:
+    bar: foo # dbname: owner
+  postgresql:
+    version: "10"
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"

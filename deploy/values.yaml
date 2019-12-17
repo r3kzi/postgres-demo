@@ -1,0 +1,12 @@
+# options to aid debugging of the operator itself
+configDebug:
+  # toggles verbose debug logs from the operator
+  debug_logging: "true"
+
+configAwsOrGcp:
+  # AWS region used to store ESB volumes
+  aws_region: eu-west-1
+
+configKubernetes:
+  # toggles pod anti affinity on the Postgres pods
+  enable_pod_antiaffinity: "true"

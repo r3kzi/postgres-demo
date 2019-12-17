@@ -25,7 +25,7 @@ public class PostgresDemoApplication {
 		SpringApplication.run(PostgresDemoApplication.class, args);
 	}
 
-	@Scheduled(fixedRate = 1)
+	@Scheduled(fixedRate = 1000)
 	public void insertID() {
 		ID id = new ID();
 		idRepository.saveAndFlush(id);
